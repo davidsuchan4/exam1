@@ -1,16 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-long long dfs(long long r, long long c, long long n, long long time, vector<vector<long long>>& dirs, vector<vector<long long>> graph, vector<vector<long long>>& dp){
+long long dfs(long long r, long long c, long long n, long long time, vector<vector<long long>>& dirs, vector<vector<long long>> graph){
     if(r >= n || r < 0 || c >= n || c < 0){
         return INT_MAX;
     }
     if(r == n - 1 && c == n - 1){
         return time;
     }
-    if(dp[r][c] != -1){
-        return dp[r][c];
-    }
+
     long long minimum = INT_MAX;
 
     for(long long i{}; i < 4; ++i){
@@ -27,12 +25,14 @@ long long dfs(long long r, long long c, long long n, long long time, vector<vect
             else{
                 newTime = time;
             }
-            graph[newR][newC] = INT_MAX;
-            minimum = min(minimum, dfs(newR, newC, n, newTime, dirs, graph, dp));
-
+            vector<vector<long long>> tempG = graph;
+            tempG[newR][newC] = INT_MAX;
+            minimum = min(minimum, dfs(newR, newC, n, newTime, dirs, tempG));
+            
+            
         }
     }
-    return dp[r][c] = minimum;
+    return minimum;
 
 }
 
@@ -54,11 +54,7 @@ int main(){
         {1, 0}, {0,1}, {-1,0}, {0, -1}
     };
 
-    vector<vector<long long>> dp(n, vector<long long>(n, -1));
-    dfs(0, 0, n, 1, dirs, graph, dp);
-    cout << dp[0][0];
+    cout << dfs(0, 0, n, 1, dirs, graph);
+
     return 0;
-
-
-
 }
