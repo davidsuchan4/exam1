@@ -7,12 +7,16 @@ int main(){
     string nums = to_string(n);
 
     sort(nums.begin(), nums.end());
-    int idx{};
     int curNum = 1;
     for(int i{}; i < nums.size(); ++i){
-        if(curNum < nums[idx] - '0'){
+        if(curNum < nums[i] - '0'){
             cout << curNum;
             return 0;
+        }
+        int cur = nums[i];
+        int idx = i + 1;
+        while(nums[idx] == cur){
+            ++idx;
         }
         ++curNum;
     }
@@ -26,6 +30,11 @@ int main(){
                 cout << curNum;
                 return 0;
             }
+                    int cur = nums[i];
+        int idx = j + 1;
+        while(nums[idx] == cur){
+            ++idx;
+        }
             ++curNum;
         }
     }
